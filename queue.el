@@ -1,11 +1,12 @@
 ;;; queue.el --- Queue data structure  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 1991-1995, 2008-2009, 2012, 2017  Free Software Foundation, Inc
+;; Copyright (C) 1991-1995, 2008-2009, 2012, 2017, 2021  Free Software Foundation, Inc
 
 ;; Author: Inge Wallin <inge@lysator.liu.se>
 ;;         Toby Cubitt <toby-predictive@dr-qubit.org>
 ;; Maintainer: Toby Cubitt <toby-predictive@dr-qubit.org>
 ;; Version: 0.2
+;; Package-Requires: ((cl-lib 0.5))
 ;; Keywords: extensions, data structures, queue
 ;; URL: http://www.dr-qubit.org/emacs.php
 ;; Repository: http://www.dr-qubit.org/git/predictive.git
@@ -44,7 +45,7 @@
 
 ;;; Code:
 
-(eval-when-compile (require 'cl))
+(eval-when-compile (require 'cl-lib))
 
 (defmacro queue--when-generators (then)
   "Evaluate THEN if `generator' library is available."
@@ -52,18 +53,17 @@
   (if (require 'generator nil 'noerror) then))
 
 
-(defstruct (queue
-            ;; A tagged list is the pre-defstruct representation.
-            ;; (:type list)
-	    :named
-	    (:constructor nil)
-	    (:constructor queue-create ())
-	    (:copier nil))
+(cl-defstruct (queue
+               ;; A tagged list is the pre-defstruct representation.
+               ;; (:type list)
+	       :named
+	       (:constructor nil)
+	       (:constructor queue-create ())
+	       (:copier nil))
   head tail)
 
 
-;;;###autoload
-(defalias 'make-queue 'queue-create
+(defalias 'make-queue #'queue-create
   "Create an empty queue data structure.")
 
 
@@ -75,7 +75,7 @@
     (setf (queue-head queue)
 	  (setf (queue-tail queue) (cons element nil)))))
 
-(defalias 'queue-append 'queue-enqueue)
+(defalias 'queue-append #'queue-enqueue)
 
 
 (defun queue-prepend (queue element)
