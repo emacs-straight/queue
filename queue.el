@@ -6,7 +6,7 @@
 ;;         Toby Cubitt <toby-predictive@dr-qubit.org>
 ;; Maintainer: Toby Cubitt <toby-predictive@dr-qubit.org>
 ;; Version: 0.2
-;; Package-Requires: ((cl-lib 0.5))
+;; Package-Requires: ((cl-lib "0.5"))
 ;; Keywords: extensions, data structures, queue
 ;; URL: http://www.dr-qubit.org/emacs.php
 ;; Repository: http://www.dr-qubit.org/git/predictive.git
